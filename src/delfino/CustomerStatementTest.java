@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Ignore;
 import org.junit.Test;
 
-public class CustomerTest {
+public class CustomerStatementTest {
 	
 	@Test
 	public void testRegularRentalWithOneDay() {
@@ -298,4 +298,23 @@ public class CustomerTest {
 		
 	}
 
+	@Test
+	public void testRentalWithMovieThatHasUnknownPriceCodeBillsNothingAndGivesFrequentPoint() {
+		Customer customer = new Customer("John");
+		customer.addRental(new Rental(new Movie("inteligência articial", Integer.MAX_VALUE), 1));
+		
+		String statement = customer.statement();
+		
+		System.out.println(statement);
+		
+		assertEquals("The statement is incorrect", 
+				"Rental Record for John\n" +
+						"	inteligência articial	0.0\n" +
+						"Amount owed is 0.0\n" +
+						"You earned 1 frequent renter points"
+						,
+						statement);
+		
+	}
+	
 }
